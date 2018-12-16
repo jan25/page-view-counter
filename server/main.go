@@ -33,5 +33,41 @@ func main() {
 
 func incrementPageCount(w http.ResponseWriter, r *http.Request) {
 	param := mux.Vars(r)
-	log.Println("var %v" , param)
+	path := param["url"]
+	w.WriteHeader(http.StatusOK)
+
+	log.Printf("var: %v , path: %s" , param , path)
+
+	// increment counter of path if path doesn't exist
+	// else set it to 1
+	err := redisClient.Incr(path).Err()
+	if err != nil {
+		log.Printf("Failed to increment %v", err)
+	}else{
+		log.Printf("Increamented successfully")
+		val, err := redisClient.Get(path).Int64()
+		if err != nil {
+			log.Printf("Failed to get value %v", err)
+		}else{
+			log.Printf("Value for key: %d\n", val )
+		}
+	}
+
+    // This is weird
+	//val , err := redisClient.Get(path).Int64()
+	//if err != nil{
+	//	log.Printf("foo")
+	//}else{
+	//	log.Printf("Old value: %d\n", val)
+	//	err = redisClient.Incr(path).Err()
+	//	if err != nil {
+	//		log.Fatal("Failed to increament counter")
+	//	} else{
+	//		val, err = redisClient.Get(path).Int64()
+	//		log.Printf("New vale: %d\n", val)
+	//
+	//	}
+	//
+	//}
+
 }
