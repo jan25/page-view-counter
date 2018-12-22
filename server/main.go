@@ -6,6 +6,7 @@ import (
 	"log"
 	"github.com/go-redis/redis"
 	"time"
+	"github.com/googollee/go-socket.io"
 )
 
 var redisClient *redis.Client
