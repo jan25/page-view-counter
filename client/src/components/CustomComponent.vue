@@ -29,7 +29,7 @@ export default {
       countViews: 0,
       backgroundColor: '#EEE',
       borderColor: '#DDD',
-      socket: io('localhost:3001')
+      socket: io('localhost:3002')
     }
   },
   mounted(){
